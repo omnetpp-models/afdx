@@ -1,0 +1,39 @@
+2009-03-12  ------ omnetpp-4.0 released ------
+
+2009-02-27  ------ omnetpp-4.0rc2 released ------
+
+2008-12-12  ------ omnetpp-4.0rc1 released ------
+
+2008-10-03  Andras Varga
+
+	* copyright headers made consistent with other same simulations
+
+	* cleanup:
+	- header guards made consistent
+	- put interfaces into their own files
+	- added dll export/import symbol
+
+	* Split renamed to Fork; old Fork renamed to Clone
+
+	* cleaned up the implementation of Clone
+
+	* created SourceOnce and optimized Source
+
+2008-09-20  Andras Varga
+
+	* added Allocate, Deallocate
+	
+2008-09-19  Rudolf Hornig
+
+	* added ResourcePool, ResourceBasedQueue
+
+2008-09-18  Andras Varga
+
+	* made Job message keep track of parent-child relationships
+
+	* added Split, Join, and JobTable modules
+
+2006..2007  Rudolf Hornig
+
+	* initial implementation, based on the Fifo and CQN examples,
+	and other queueing models

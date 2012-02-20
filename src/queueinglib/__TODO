@@ -1,0 +1,66 @@
+- make it an error when a parent Job gets killed? problem: what about shutdown-time???
+- Job should be IJob and only IJob should be used in the lib. Everybody is free to implement the interface
+- modules that can, compare, modify message attributes (in a generic way. implement LUA scripting?)
+- doc: write a correct documentation. note that only IDEAL channel should be used in 
+  the projects. If delay has to be modeled: Use a Delay block, or an (active) Queue with 
+  unlimited/limited queue size
+- In general it would be great if module parameters could reference Job parameters (i.e. a Servers
+  processing time could be calculated based on message length)
+- in server, support priority queue (polling, preemptive (with or witout restart), nonpreemptive) ? queuing policy
+  time rule: fifo, lifo (preemptive resume: preempt (w or w/o restart), nonpreemptive), 
+  round robin (time-slot based or job by job), 
+  processor sharing? (from hyperformix)
+- Support overhead time value (time required to take and start processing a job)
+- Queue: Job selection (fifo, lifo, round robin, proc share) , Queue selection 
+
+- create resource. each incoming job creates a number of resources specified in a parameter (or script?) (how to create adressable resources?)
+  allocated resources should be carried by the job (so leak can be detcetd at sink)
+- set traffic light/method in base class. can update the state of the logical resources
+- destroy resource node
+- different resource classes (memory, CPU etc)
+- resource types (nonadressable, adressable (ordered, identifiable: firstfit, bestfit), user defined data resources)
+- resource selection algorithm
+- release resource (should be configured whether which/how much/all resource should be)
+- migrate resources from one pool to an other (using the same resource class)
+
+- block / update / interrupt / resume nodes (change the workflow of a transaction based on property or place)
+- loop node ?do while, while, for .. n times. Set loopCount/loopIndex variable
+- set node. Change the value of properties (message or other nodes) (could be called trigger)
+- allocate node: what to do if out of resource? error / wait.
+- allocate node: strategy for allocation (i.e. which job should be server from the queue. lifo/fifo/roundrobin, best fit,
+  smallest/largest resource requirement
+- allocate node: idea. Allocate is essentially a server. Allocation is available only for jobs that are processed currently.
+- block node (with passive queue) - block the queue unil some condition turns true - essentially this is an allocate node
+  requesting a logical resource
+- allocation req: reuest more than one resource in an atomic way. i.e. do not proceed until both resource is available
+- a server can allocate resources (one or more). Server serves a job ONLY if resources can be allocated (or already present?)
+  for the job (i.e. there is a requiredResources clause. also we can specify wheter the server may try to reserve the resources
+  in this case resource pools have to be specified). Also a policy what should happen if the resource is not available/
+  cannot be allocated: job could be queued, dropped, routed to a different gate or error generated.
+
+- a datarate channel could be also a resource??? i.e. allowing to transmit only if it is idle?
+- a block until node would be great (kind of logical resource allocation. i.e. infinite number of resource if the expression is true). 
+  pass jobs only if a specific condition is true (create a traffic light node and representing the logical resource
+  block until nodes check those)
+- routing the jobs in a loop ? in, continue, repeat, out gates (until epression?) (or just a simple if/then node) or a more generic
+  classifier(switch node)? (could be modeled with a classifier wich routes based on boolean evaluation, and a set node
+  which can add/modify parameters on the job)
+
+- clone: duplicate the messages ONLY on the specified output links i.e. "0 4 7 11" "*" would clone on all. Set the properies of the new sibling jobs?
+- classifier: allow if rest gate to be unconnected. in this case just throw an error? 
+- router node? a node that evaluates a boolean expession for each output connection and sends the job (or a copy of it if more
+  than two has evaluated to true) on the ones that evaluated true
+- delay node = delay channel ? 
+- datarate channel is a logical resource ?
+- a source node where the job creation is trigered by incoming events or resource availability (the incoming event/job is destroyed
+  resurce can be physical or logical too
+
+- STATISTICS: total delay, queuing, service, response time for jobs. 
+- measure the response time between two point in the model (separate measurement nodes?)
+- throughput on connections
+- queueue length, server/connection/resource utilization
+
+ 
+    
+ 
+

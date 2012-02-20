@@ -1,0 +1,9 @@
+Avionics Full-Duplex Switched Ethernet for OMNeT++
+==================================================
+
+This model is licensed under the LGPL.
+
+NOTES:
+
+- The model contains only the MAC layer implementation.
+- Higher layer functions are not implemented.
