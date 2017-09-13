@@ -16,7 +16,7 @@
 #ifndef __INTEGRITYCHECKER_H__
 #define __INTEGRITYCHECKER_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

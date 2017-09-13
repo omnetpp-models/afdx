@@ -52,10 +52,10 @@ void PassiveQueue::handleMessage(cMessage *msg)
     job->setTimestamp();
 
     // check for container capacity
-    if (capacity >=0 && queue.length() >= capacity)
+    if (capacity >=0 && queue.getLength() >= capacity)
     {
         EV << "Queue full! Job dropped.\n";
-        if (ev.isGUI()) bubble("Dropped!");
+        if (hasGUI()) bubble("Dropped!");
         droppedVector.record(++droppedJobs);
         delete msg;
         return;
@@ -84,8 +84,8 @@ void PassiveQueue::handleMessage(cMessage *msg)
     lengthVector.record(length());
 
     // change the icon color
-    if (ev.isGUI())
-        getDisplayString().setTagArg("i",1, queue.empty() ? "" : "cyan3");
+    if (hasGUI())
+        getDisplayString().setTagArg("i",1, queue.isEmpty() ? "" : "cyan3");
 }
 
 void PassiveQueue::queueLengthChanged()
@@ -98,14 +98,14 @@ void PassiveQueue::queueLengthChanged()
 
 int PassiveQueue::length()
 {
-    return queue.length();
+    return queue.getLength();
 }
 
 void PassiveQueue::request(int gateIndex)
 {
     Enter_Method("request()!");
 
-    ASSERT(!queue.empty());
+    ASSERT(!queue.isEmpty());
 
     // gather queuelength statistics
     queueLengthChanged();
@@ -134,8 +134,8 @@ void PassiveQueue::request(int gateIndex)
     // statistics
     lengthVector.record(length());
 
-    if (ev.isGUI())
-        getDisplayString().setTagArg("i",1, queue.empty() ? "" : "cyan");
+    if (hasGUI())
+        getDisplayString().setTagArg("i",1, queue.isEmpty() ? "" : "cyan");
 }
 
 void PassiveQueue::finish()

@@ -16,7 +16,7 @@
 #ifndef __REDUNDANCYCHECKER_H__
 #define __REDUNDANCYCHECKER_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

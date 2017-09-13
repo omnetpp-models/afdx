@@ -61,8 +61,7 @@ bool SelectionStrategy::isSelectable(cModule *module)
     if (server != NULL)
         return server->isIdle();
 
-    opp_error("Only IPassiveQueue and IServer is supported by this Strategy");
-    return true;
+    throw cRuntimeError("Only IPassiveQueue and IServer is supported by this Strategy");
 }
 
 // --------------------------------------------------------------------------------------------
@@ -98,7 +97,7 @@ int RandomSelectionStrategy::select()
         if (isSelectable(selectableGate(i)->getOwnerModule()))
             noOfSelectables++;
 
-    int rnd = intuniform(1, noOfSelectables);
+    int rnd = intuniform(getEnvir()->getRNG(0), 1, noOfSelectables);
 
     for (int i=0; i<gateSize; i++)
         if (isSelectable(selectableGate(i)->getOwnerModule()) && (--rnd == 0))

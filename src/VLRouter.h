@@ -16,7 +16,7 @@
 #ifndef __VLROUTER_H__
 #define __VLROUTER_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

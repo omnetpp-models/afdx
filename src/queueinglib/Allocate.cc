@@ -32,7 +32,7 @@ void Allocate::initialize()
     resourcePriority = par("resourcePriority");
 
     const char *resourceName = par("resourceModuleName");
-    cModule *mod = getParentModule()->getModuleByRelativePath(resourceName);
+    cModule *mod = getParentModule()->getModuleByPath(resourceName);
     if (!mod)
         throw cRuntimeError("Cannot find resource pool module `%s'", resourceName);
     resourcePool = check_and_cast<IResourcePool*>(mod);
@@ -74,7 +74,7 @@ void Allocate::resourceGranted(IResourcePool *provider)
     Enter_Method("resourceGranted");
 
     // send out job for which resource was granted
-    ASSERT2(!queue.empty(), "Resource granted while no jobs are waiting");
+    ASSERT2(!queue.isEmpty(), "Resource granted while no jobs are waiting");
     Job *job = dequeue();
     send(job, "out");
 
@@ -104,7 +104,7 @@ Job *Allocate::dequeue()
         queue.remove(job);
     }
 
-    lengthVector.record(queue.length());
+    lengthVector.record(queue.getLength());
 
     simtime_t dt = simTime() - job->getTimestamp();
     job->setTotalQueueingTime(job->getTotalQueueingTime() + dt);
@@ -116,10 +116,10 @@ Job *Allocate::dequeue()
 void Allocate::enqueueOrDrop(Job *job)
 {
     // check for container capacity
-    if (capacity >=0 && queue.length() >= capacity)
+    if (capacity >=0 && queue.getLength() >= capacity)
     {
         EV << "Capacity full! Job dropped.\n";
-        if (ev.isGUI()) bubble("Dropped!");
+        if (hasGUI()) bubble("Dropped!");
         droppedVector.record(++numDropped);
         delete job;
         return;
@@ -129,7 +129,7 @@ void Allocate::enqueueOrDrop(Job *job)
         EV << "Job enqueued.\n";
         job->setTimestamp();
         queue.insert(job);
-        lengthVector.record(queue.length());
+        lengthVector.record(queue.getLength());
     }
 }
 

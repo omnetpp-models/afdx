@@ -16,9 +16,8 @@
 #ifndef __MAC_H__
 #define __MAC_H__
 
-#include <omnetpp.h>
-#include "IServer.h"
-#include "SelectionStrategies.h"
+#include "queueinglib/IServer.h"
+#include "queueinglib/SelectionStrategies.h"
 
 namespace afdx {
 

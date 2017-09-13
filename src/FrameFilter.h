@@ -16,7 +16,7 @@
 #ifndef __FRAMEFILTER_H__
 #define __FRAMEFILTER_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

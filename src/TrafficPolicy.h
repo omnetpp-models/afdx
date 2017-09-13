@@ -16,7 +16,7 @@
 #ifndef __TRAFFICPOLICY_H__
 #define __TRAFFICPOLICY_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

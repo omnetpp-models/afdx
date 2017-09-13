@@ -14,9 +14,8 @@
 // 
 
 cplusplus {{
-#include "Job.h"
+#include "queueinglib/Job.h"
 }}
-
 
 message queueing::Job;
 

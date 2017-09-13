@@ -49,7 +49,7 @@ void ResourceBasedQueue::initialize()
     resourcePool = NULL;
 
     const char *resourceName = par("resourceModuleName");
-    cModule *tmpModule = getParentModule()->getModuleByRelativePath(resourceName);
+    cModule *tmpModule = getParentModule()->getModuleByPath(resourceName);
     if (strlen(resourceName) > 0)
         resourcePool = check_and_cast<IResourcePool*>(tmpModule);
 }
@@ -59,7 +59,7 @@ void ResourceBasedQueue::handleMessage(cMessage *msg)
     if (msg==endServiceMsg)
     {
         endService( jobServiced );
-        if (!queue.empty() && allocateResource(peek()))
+        if (!queue.isEmpty() && allocateResource(peek()))
         {
             queueLengthWillChange();
             jobServiced = getFromQueue();
@@ -90,10 +90,10 @@ void ResourceBasedQueue::handleMessage(cMessage *msg)
         else
         {
             // check for container capacity
-            if (capacity >=0 && queue.length() >= capacity)
+            if (capacity >=0 && queue.getLength() >= capacity)
             {
                 EV << "Capacity full! Job dropped.\n";
-                if (ev.isGUI()) bubble("Dropped!");
+                if (hasGUI()) bubble("Dropped!");
                 droppedVector.record(++droppedJobs);
                 delete job;
                 return;
@@ -106,7 +106,7 @@ void ResourceBasedQueue::handleMessage(cMessage *msg)
 
     lengthVector.record(length());
 
-    if (ev.isGUI()) getDisplayString().setTagArg("i",1, !jobServiced ? "" : "cyan3");
+    if (hasGUI()) getDisplayString().setTagArg("i",1, !jobServiced ? "" : "cyan3");
 }
 
 Job *ResourceBasedQueue::getFromQueue()
@@ -133,7 +133,7 @@ Job *ResourceBasedQueue::peek()
 
 int ResourceBasedQueue::length()
 {
-    return queue.length();
+    return queue.getLength();
 }
 
 void ResourceBasedQueue::queueLengthWillChange()
@@ -211,10 +211,10 @@ std::string ResourceBasedQueue::getFullPath() const
 void ResourceBasedQueue::resourceGranted(IResourcePool *provider)
 {
     Enter_Method("resourceGranted");
-    ASSERT2(!jobServiced && !queue.empty(), "Resource granted while the node is busy or the queue is empty");
+    ASSERT2(!jobServiced && !queue.isEmpty(), "Resource granted while the node is busy or the queue is empty");
     resourceAllocated = true;
     // start servicing if the processor is idle and the queue is not empty
-    if (!jobServiced && !queue.empty())
+    if (!jobServiced && !queue.isEmpty())
     {
         queueLengthWillChange();
         jobServiced = getFromQueue();

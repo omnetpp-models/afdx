@@ -16,7 +16,7 @@
 #ifndef __REGULATORLOGIC_H__
 #define __REGULATORLOGIC_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

@@ -17,7 +17,7 @@
 #define __AFDXMESSAGESOURCE_H__
 
 #include <omnetpp.h>
-#include "Source.h"
+#include "queueinglib/Source.h"
 
 namespace afdx {
 

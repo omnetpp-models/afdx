@@ -32,7 +32,7 @@ void ResourcePool::initialize()
     WATCH_LIST(allocatorList);
     WATCH(amount);
     amount = par("amount");
-    if (ev.isGUI())
+    if (hasGUI())
         updateDisplayString();
 }
 
@@ -45,7 +45,7 @@ bool ResourcePool::tryToAllocate(IResourceAllocator *allocator, long amountToAll
     Enter_Method("allocate(%ld): %s", amountToAllocate, amount >= amountToAllocate ? "success" : "fail");
     if (amount >= amountToAllocate) {
         amount -= amountToAllocate;
-        if (ev.isGUI())
+        if (hasGUI())
             updateDisplayString();
         return true;
     }
@@ -56,7 +56,7 @@ bool ResourcePool::tryToAllocate(IResourceAllocator *allocator, long amountToAll
         req.amountToAllocate = amountToAllocate;
         req.allocator = allocator;
         add(req);
-        if (ev.isGUI())
+        if (hasGUI())
             updateDisplayString();
         return false;
     }
@@ -73,7 +73,7 @@ void ResourcePool::release(long amountToRelease)
         firstIt->allocator->resourceGranted(this);
         allocatorList.pop_front();
     }
-    if (ev.isGUI())
+    if (hasGUI())
         updateDisplayString();
 }
 

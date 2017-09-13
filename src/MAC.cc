@@ -14,7 +14,7 @@
 //
 
 #include "MAC.h"
-#include "IPassiveQueue.h"
+#include "queueinglib/IPassiveQueue.h"
 
 namespace afdx {
 

@@ -16,7 +16,7 @@
 #ifndef __REDUNDANCYCONTROLLER_H__
 #define __REDUNDANCYCONTROLLER_H__
 
-#include <omnetpp.h>
+#include "AFDXDefs.h"
 
 namespace afdx {
 

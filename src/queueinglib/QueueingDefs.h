@@ -12,8 +12,10 @@
 
 #include <omnetpp.h>
 
-#if OMNETPP_VERSION < 0x0400
-#  error At least OMNeT++/OMNEST version 4.0 required
+using namespace omnetpp;
+
+#if OMNETPP_VERSION < 0x0500
+#  error At least OMNeT++/OMNEST version 5.0 required
 #endif
 
 #if defined(QUEUEING_EXPORT)
@@ -23,6 +25,7 @@
 #else
 #  define QUEUEING_API
 #endif
+
 
 #endif
 

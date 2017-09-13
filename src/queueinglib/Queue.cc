@@ -49,7 +49,7 @@ void Queue::handleMessage(cMessage *msg)
     if (msg==endServiceMsg)
     {
         endService( jobServiced );
-        if (queue.empty())
+        if (queue.isEmpty())
         {
             jobServiced = NULL;
             processorStateWillChange();
@@ -81,10 +81,10 @@ void Queue::handleMessage(cMessage *msg)
         else
         {
             // check for container capacity
-            if (capacity >=0 && queue.length() >= capacity)
+            if (capacity >=0 && queue.getLength() >= capacity)
             {
                 EV << "Capacity full! Job dropped.\n";
-                if (ev.isGUI()) bubble("Dropped!");
+                if (hasGUI()) bubble("Dropped!");
                 droppedVector.record(++droppedJobs);
                 delete job;
                 return;
@@ -97,7 +97,7 @@ void Queue::handleMessage(cMessage *msg)
 
     lengthVector.record(length());
 
-    if (ev.isGUI()) getDisplayString().setTagArg("i",1, !jobServiced ? "" : "cyan3");
+    if (hasGUI()) getDisplayString().setTagArg("i",1, !jobServiced ? "" : "cyan3");
 }
 
 Job *Queue::getFromQueue()
@@ -118,7 +118,7 @@ Job *Queue::getFromQueue()
 
 int Queue::length()
 {
-    return queue.length();
+    return queue.getLength();
 }
 
 void Queue::queueLengthWillChange()
